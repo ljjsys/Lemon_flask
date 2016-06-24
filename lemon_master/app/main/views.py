@@ -29,7 +29,7 @@ def login_page():
 @login_manager.unauthorized_handler
 def unauthorized_handler():
     # return 'Unauthorized: You have no access to this page.'
-    return render_template('unauthorized.html')
+    return render_template('Errors/unauthorized.html')
 
 
 @main.route('/logout')
