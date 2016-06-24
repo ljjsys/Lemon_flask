@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">   
+    <head>
+        <title>Lemon</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <link rel="stylesheet"  href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+        <link rel="stylesheet"  href="{{ url_for('static', filename='font-awesome-4.3.0/css/font-awesome.min.css') }}">
+        <link rel="stylesheet"  href="{{ url_for('static', filename='css/login.css') }}">
+    </head>
+    
+    <body>
+        {% for message in get_flashed_messages() %}
+            <div class="alert alert-danger" role="alert">
+              <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+              <span class="sr-only">Error:</span>
+              {{ message }}
+            </div>
+        {% endfor %}
+
+        <div id="loginbox">        
+            <form id="loginform" class="form-horizontal" action="{{ url_for('main.login_page') }}" method="post">
+                <div class="login_logo"> 
+                    <h3><img src="../static/img/logo.png" alt="Lemon-Logo" /></h3>
+                </div>
+                
+                <div class="input-group">
+                  <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-user"></i></span>
+                  <input required="required" type="text" class="form-control" name="username" placeholder="Username" aria-describedby="sizing-addon2">
+                </div>
+
+                <div class="input-group">
+                  <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-lock"></i></span>
+                  <input required="required" type="password" class="form-control" name="password" placeholder="Password" aria-describedby="sizing-addon2">
+                </div>
+                
+                <div class="form-actions form-horizontal">
+                    <button class="pull-right btn btn-success" type="submit" >Login</button>
+                </div>               
+            </form>           
+        </div>      
+    </body>
+</html>

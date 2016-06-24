@@ -1,0 +1,24 @@
+<div>
+    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <span class="span-login-user" >
+                <img class="img-circle user-logo" width="48" height="48" src="../static/img/users/root.png" />
+
+            </span>
+            <strong><font color="#d1dade" size="4">admin</font></strong>
+        </div>
+        <ul class="nav navbar-top-links navbar-right">
+            <li>
+                <span class="m-r-sm text-muted welcome-message">欢迎使用Lemon运维系统</span>
+            </li>
+            <li class="dropdown">
+                <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                     <span class="m-r-sm text-muted welcome-message">帮助</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('main.logout') }}"><i class="fa fa-sign-out"></i> Logout</a>
+            </li>
+        </ul>
+    </nav>
+</div>

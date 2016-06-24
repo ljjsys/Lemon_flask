@@ -1,0 +1,150 @@
+
+<div class="users_box">
+    <button type="button" class="btn btn-success pull-right" id="newUser" data-toggle="modal" data-target="#addModal">+ NEW USER</button>
+
+    <div class="users_content">
+        <table id="user_list" class="table  table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th class="info">UserName</th>
+                    <th>Email</th>
+                    <th class="info">Created_time</th>
+                    <th>UserGroup</th>
+                    <!-- <th class="danger">Last_Login</th> -->
+                    <th class="info">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="user_tb">
+                {% for user in user_list %}
+                    <tr class="server_tr">
+                        <td class="center">{{ user[1] }}</td>
+                        <td class="center">{{ user[2] }}</td>
+                        <td class="center warning">{{ user[3] }}</td>
+                        <td class="center warning">{{ user[4] }}</td>
+                        <td class="center">
+                            <button  data-id={{ user[0] }} type="button" class="btn btn-info btn-xs" onclick="Edit(this)">
+                                <i class="fa fa-pencil-square-o"></i>
+                            </button>
+                            <button  data-id={{ user[0] }} type="button" class="btn btn-danger btn-xs" onclick="Delete(this)">
+                                <i class="fa fa-trash-o"></i>
+                            </button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- user add modal-->
+<div id="addModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 id="addModalLabel" class="modal-title">Add New User</h4>
+          </div>
+          <!-- you can place the contents in modal-body -->
+          <div class="modal-body">
+                <form class="form-horizontal" id="userform">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">UserName:</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" id="username" name="username" required="required"  data-rule-required="true" placeholder="input username">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Email:</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" id="email" name="email" required="required" placeholder="Email address">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Password:</label>
+                        <div class="col-sm-9">
+                          <input type="password" class="form-control" id="password" name="password" required="required" placeholder="user password">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">ConfirmPassword:</label>
+                        <div class="col-sm-9">
+                          <input type="password" class="form-control" id="confirm_password" name="confirm_password" required="required" placeholder="password again">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Group:</label>
+                        <div class="col-sm-9">
+                              <select id="user-group" class="form-control">
+                                <option value="Guest">Guest</option>
+                                <option value="Supervisors">administrators</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-info" data-dismiss="modal">Cancle</button>
+                      <button id="btnAdd" type="button" class="btn btn-primary" onclick="AddUser(this)" >Add</button>
+                    </div>
+                </form>
+          </div>
+        </div>
+    </div>
+</div>
+
+<!-- user edit modal-->
+<div id="editModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 id="editModalLabel" class="modal-title">Edit user info</h4>
+          </div>
+          <!-- you can place the contents in modal-body -->
+          <div class="modal-body">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">UserName:</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="editUsername" disabled="disabled" style="background-color:#cccccc;">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Email:</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="editEmail">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Group:</label>
+                    <div class="col-sm-9">
+                          <select id="editGroup" class="form-control">
+                            <option value="Guest">Guest</option>
+                            <option value="Supervisors">Supervisors</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+            <button id="btnUpdate" type="button" class="btn btn-primary">Update</button>
+          </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+    <!-- user delete modal -->
+<div id="deleteModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Delete User</h4>
+          </div>
+          <div class="modal-body">
+            <p style="color:red">Are you sure to delete this user ? !!!</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" onclick="ConfirmDelete(this)">Yes</button>
+            <button type="button" class="btn btn-success" data-dismiss="modal">No</button>
+          </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+

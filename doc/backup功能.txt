@@ -1,0 +1,35 @@
+1. 采用crontab + rsync 进行备份机制
+
+2. 服务端客户端均需要安装rsync,ssh软件包
+
+3. 自动添加ssh pub key 免密码连接  user:backup
+
+ rsync --stats -rzt --delete 172.16.11.171:$NingboDir${syncdir} $ShanghaiDir${syncdir}
+45 23 * * * rsync  -avz  -e "ssh -p 10022"  backup@172.48.2.101:/etc/puppet/environments/production/  /opt/Backup/puppet_backup/
+$Schedule              $cmd                                                                    $comment
+05 20 * * *            rsync --stats -rzt --delete $BackupUser@$IP:$Source   $Destination      #JobName
+
+
+
+
+
+
+BackupServer:
+ServerName    IP     BackupStoragePath          Owner
+
+
+BackupList:
+JobName  IP  Source   Destination     Owner   Schedule   Last_RunTime    Actions
+																		edit,delete,run
+																		
+																		
+
+Supply destination server info:
+Remote server:
+remote path:
+remote port:
+remote user:
+remote password:
+key type:
+key length:
+

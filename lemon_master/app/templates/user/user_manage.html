@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+
+{% block content %}
+    {% include 'user/user_users.html' %}
+    {% include 'user/user_groups.html' %}
+{% endblock %}
+
+{% block script %}
+    {% include 'user/user_users_script.html' %}
+    {% include 'user/user_groups_script.html' %}
+{% endblock %}

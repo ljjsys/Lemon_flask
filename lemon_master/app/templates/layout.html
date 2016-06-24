@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Lemon-OPS</title>
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+        <link rel="stylesheet"  href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+        <link rel="stylesheet"  href="{{ url_for('static', filename='font-awesome-4.3.0/css/font-awesome.min.css') }}">
+        <link rel="stylesheet"  href="{{ url_for('static', filename='css/layout.css') }}">
+        <link rel="stylesheet"  href="{{ url_for('static', filename='css/@media.css') }}">
+        <link rel="stylesheet"  href="{{ url_for('static', filename='css/lemon.css') }}">
+        {% block stylesheet %}
+        {% endblock %}
+    </head>
+
+    <body>
+	    <div id="wrapper">
+	        {% include 'nav.html' %}
+            <div id="page-wrapper" class="gray-bg">
+                {% include 'nav_bar_header.html' %}
+
+                {% block content %}{% endblock %}
+
+                {% include 'footer.html' %}
+            </div>
+	    </div>
+
+        <!-- JS  -->
+        <script src="../static/js/jquery-2.1.4.min.js"></script>
+        <script src="../static/js/bootstrap.min.js"></script>
+        <script src="../static/js/jquery.validate.min.js"></script>  <!-- 使用validator时，需要有name元素 -->
+        <script>
+            <!-- active menu -->
+		    var url_array = location.pathname.split("/");
+		    s1 = url_array[1];
+            s2 = url_array[1];
+            $("#"+s1).addClass('active');
+            $('#'+s1+' .'+s2).addClass('active');
+            console.log(s1)
+{#            '/foo/bar/'.split('/') // ["", "foo", "bar", ""]#}
+{#            'foo/bar/'.split('/')  // ["foo", "bar", ""]#}
+{#            'foo/bar'.split('/')  // ["foo", "bar"]#}
+		</script>
+        {% block script %}
+        {% endblock %}
+    </body>
+</html>
