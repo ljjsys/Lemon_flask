@@ -8,6 +8,10 @@ body {
   /*overflow-x: hidden;*/
 }
 
+.error {
+  color: #ac2925;
+}
+
 .row-box {
   background-color: #d1dade;
   margin: 0px;
@@ -78,7 +82,6 @@ body {
 }
 .nav-header {
   padding: 33px 25px;
-  background: url("patterns/header-profile.png") no-repeat;
 }
 .pace-done .nav-header {
   transition: all 0.5s;
