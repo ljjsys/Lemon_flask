@@ -8,7 +8,6 @@
                     <th class="info">Group_Name</th>
                     <th class="info">Created_time</th>
                     <th class="info">Users</th>
-                    <th class="info">Actions</th>
                 </tr>
             </thead>
             <tbody id="user_tb">
@@ -16,15 +15,7 @@
                     <tr class="server_tr">
                         <td class="center">{{ user[1] }}</td>
                         <td class="center">{{ user[3] }}</td>
-                        <td class="center warning">{{ user[3] }}</td>
-                        <td class="center">
-                            <button  data-id={{ user[0] }} type="button" class="btn btn-info btn-xs" onclick="Edit(this)">
-                                <i class="fa fa-pencil-square-o"></i>
-                            </button>
-                            <button  data-id={{ user[0] }} type="button" class="btn btn-danger btn-xs" onclick="Delete(this)">
-                                <i class="fa fa-trash-o"></i>
-                            </button>
-                        </td>
+                        <td class="center">{{ user[3] }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
