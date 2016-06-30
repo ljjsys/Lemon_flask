@@ -5,6 +5,7 @@ import pymysql
 from config import Config
 from werkzeug import generate_password_hash, check_password_hash
 import datetime
+import json
 
 # mysql db
 mysql_server = Config.mysql_server
@@ -12,7 +13,6 @@ mysql_username = Config.mysql_username
 mysql_password = Config.mysql_password
 mysql_port = 3306
 mysql_db = Config.mysql_db
-
 
 
 @user.route('/user_manage')
@@ -26,28 +26,15 @@ def user_manage():
     print(user_list)
     return render_template('user/user_manage.html', user_list=user_list, user_name=session.get('username'))
 
-
 @user.route('/addUser', methods=['POST'])
 def addUser():
     try:
-        print("bbbbb")
         user_name = request.form['username']
-        print(user_name)
         email = request.form['email']
-        print(email)
         _password = request.form['password']
-        print(_password)
         user_password = generate_password_hash(_password)
-
-        print(user_password)
-
         user_group = request.form['group']
-        print(user_group)
         created_time = datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')
-        print(created_time)
-
-        print(user_name)
-
         conn = pymysql.connect(host=mysql_server, port=mysql_port, user=mysql_username, passwd=mysql_password,
                                db=mysql_db, charset='utf8')
         curs = conn.cursor()
@@ -55,7 +42,6 @@ def addUser():
         VALUES( '%(user_name)s', '%(email)s', '%(password_hash)s', '%(created_time)s')''' % {
             'user_name': user_name, 'email': email, 'password_hash': user_password, 'created_time': created_time})
         data = curs.fetchall()
-
 
         if len(data) is 0:
             conn.commit()
@@ -92,7 +78,6 @@ def deleteUser():
         curs.close()
         conn.close()
 
-
 @user.route('/get_user_byid', methods=['POST'])
 def get_user_byid():
     id = request.form['id']
@@ -110,7 +95,6 @@ def get_user_byid():
         'group': user_info[0][3],
     })
     return json.dumps(user_info_list, cls=CJsonEncoder, ensure_ascii=False)
-
 
 @user.route('/updateUser', methods=['POST'])
 def updateUser():
