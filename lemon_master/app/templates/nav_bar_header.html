@@ -3,9 +3,8 @@
         <div class="navbar-header">
             <span class="span-login-user" >
                 <img class="img-circle user-logo" width="48" height="48" src="../static/img/users/root.png" />
-
             </span>
-            <strong><font color="#d1dade" size="4">admin</font></strong>
+            <strong><font color="#d1dade" size="4">{{ session.get('username') }}</font></strong>
         </div>
         <ul class="nav navbar-top-links navbar-right">
             <li>
@@ -13,7 +12,7 @@
             </li>
             <li class="dropdown">
                 <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                     <span class="m-r-sm text-muted welcome-message">帮助</span>
+                     <span class="m-r-sm text-muted welcome-message">HELP</span>
                 </a>
             </li>
             <li>
