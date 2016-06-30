@@ -25,7 +25,6 @@ def login_page():
         flash('Invalid username or password.')
         return render_template('login.html')
 
-
 @login_manager.unauthorized_handler
 def unauthorized_handler():
     # return 'Unauthorized: You have no access to this page.'
@@ -42,5 +41,3 @@ def logout():
 @login_required
 def dashboard():
     return render_template('Dashboard.html', user_name = session.get('username'))
-
-

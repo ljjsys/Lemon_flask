@@ -1,20 +1,21 @@
 /* Layout,Base css */
 
 body {
-  font-family: "open sans", "Helvetica Neue", Helvetica, Arial, "微软雅黑", sans-serif;
+  /*font-family: "open sans", "Helvetica Neue", Helvetica, Arial, "微软雅黑", sans-serif;*/
   background-color: #2f4050;
   font-size: 13px;
   color: #676a6c;
-  overflow-x: hidden;
+  /*overflow-x: hidden;*/
 }
 
 .row-box {
   background-color: #d1dade;
   margin: 0px;
+  height: 170px;
 }
 
-.col-sm-3 {
-  margin-top: 15px;
+.row .col-sm-3 {
+  margin-top: 10px;
   margin-bottom: 2px;
 }
 
@@ -427,12 +428,11 @@ img.circle-border {
   -moz-border-left-colors: none;
   -moz-border-right-colors: none;
   -moz-border-top-colors: none;
-  /*border-top-width: 0px;*/
   background-color: #9ea8a5;
   border-color: #e7eaec;
   border-image: none;
   border-style: solid solid none;
-  border-width: 4px 0px 0;
+  border-width: 0px 0px 0;
   color: inherit;
   margin-bottom: 0;
   padding: 14px 15px 7px;
