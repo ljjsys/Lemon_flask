@@ -1,0 +1,5 @@
+SELECT * FROM users,roles WHERE users.`role_id` = roles.`id`
+
+INSERT INTO `Lemon_GO`.`users` SET role_id = (SELECT id FROM roles WHERE role_name='administrator')
+
+INSERT INTO `Lemon_GO`.`users` (`user_name`, `user_email`, role_id ) VALUES ('lala', 'lala@lemon.com', (SELECT id FROM roles WHERE role_name='administrator'));
