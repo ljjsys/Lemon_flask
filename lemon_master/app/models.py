@@ -16,7 +16,7 @@ class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     user_name = db.Column(db.String(64), unique=True, index=True)
-    email = db.Column(db.String(64), unique=True, index=True)
+    user_email = db.Column(db.String(64), unique=True, index=True)
     password_hash = db.Column(db.String(128))
     created_time = db.Column(db.DateTime)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
