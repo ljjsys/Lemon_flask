@@ -5,7 +5,7 @@ import pymysql
 from config import Config
 from werkzeug import generate_password_hash, check_password_hash
 import datetime
-import json
+from flask import json
 
 # mysql db
 mysql_server = Config.mysql_server
@@ -18,29 +18,40 @@ mysql_db = Config.mysql_db
 @user.route('/user_manage')
 @login_required
 def user_manage():
-    conn = pymysql.connect(host=mysql_server, port=mysql_port, user=mysql_username, passwd=mysql_password, db=mysql_db,
-                           charset='utf8')
-    curs = conn.cursor()
-    curs.execute('select id,user_name,email,created_time,role_id from users')
-    user_list = curs.fetchall()
-    print(user_list)
-    return render_template('user/user_manage.html', user_list=user_list, user_name=session.get('username'))
+    try:
+        conn = pymysql.connect(host=mysql_server, port=mysql_port, user=mysql_username, passwd=mysql_password, db=mysql_db,
+                               charset='utf8')
+        curs = conn.cursor()
+        curs.execute('''
+                      SELECT users.id,user_name,user_email,created_time,role_name
+                      FROM users INNER JOIN roles ON users.`role_id` = roles.`id`
+                      ''')
+        user_list = curs.fetchall()
+        print(user_list)
+        curs.execute("select role_name from roles")
+        role_list = curs.fetchall()
+        print(role_list[0][0])
+        return render_template('user/user_manage.html', user_list=user_list, role_list=role_list, user_name = session.get('username'))
+    finally:
+        curs.close()
+        conn.close()
 
-@user.route('/addUser', methods=['POST'])
+@user.route('/addUser',methods=['POST'])
 def addUser():
     try:
         user_name = request.form['username']
-        email = request.form['email']
+        user_email = request.form['email']
         _password = request.form['password']
         user_password = generate_password_hash(_password)
-        user_group = request.form['group']
+        role_name = request.form['role']
         created_time = datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')
         conn = pymysql.connect(host=mysql_server, port=mysql_port, user=mysql_username, passwd=mysql_password,
                                db=mysql_db, charset='utf8')
         curs = conn.cursor()
-        curs.execute('''insert into users (user_name, email, password_hash, created_time)
-        VALUES( '%(user_name)s', '%(email)s', '%(password_hash)s', '%(created_time)s')''' % {
-            'user_name': user_name, 'email': email, 'password_hash': user_password, 'created_time': created_time})
+        curs.execute('''insert into users (user_name, user_email, password_hash, created_time, role_id)
+                        VALUES( '%(user_name)s', '%(user_email)s', '%(password_hash)s', '%(created_time)s',
+                         (SELECT id FROM roles WHERE role_name = '%(role_name)s'))''' % {
+            'user_name': user_name, 'user_email': user_email, 'password_hash': user_password,  'created_time': created_time, 'role_name':role_name})
         data = curs.fetchall()
 
         if len(data) is 0:
@@ -62,7 +73,7 @@ def deleteUser():
         conn = pymysql.connect(host=mysql_server, port=mysql_port, user=mysql_username, passwd=mysql_password,
                                db=mysql_db, charset='utf8')
         curs = conn.cursor()
-        curs.execute("delete from users where id='%s'" % (id))
+        curs.execute("delete from users where id='%s'" % id)
         data = curs.fetchall()
 
         if len(data) is 0:
@@ -80,35 +91,36 @@ def deleteUser():
 
 @user.route('/get_user_byid', methods=['POST'])
 def get_user_byid():
-    id = request.form['id']
+    user_id = request.form['id']
     conn = pymysql.connect(host=mysql_server, port=mysql_port, user=mysql_username, passwd=mysql_password, db=mysql_db,
                            charset='utf8')
     curs = conn.cursor()
-    curs.execute("select id,user_name,email,user_group from users where id='%s'" % (id))
+    curs.execute("select users.id,user_name,user_email,role_name FROM users INNER JOIN roles "
+                 "ON users.role_id = roles.id where users.id = '%s'" % user_id)
     user_info = curs.fetchall()
-    print(user_info)
     user_info_list = []
     user_info_list.append({
         'ID': user_info[0][0],
         'username': user_info[0][1],
         'email': user_info[0][2],
-        'group': user_info[0][3],
+        'role': user_info[0][3],
     })
-    return json.dumps(user_info_list, cls=CJsonEncoder, ensure_ascii=False)
+    print(user_info_list)
+    return json.dumps(user_info_list)
 
 @user.route('/updateUser', methods=['POST'])
 def updateUser():
     try:
         id = request.form['id']
-        email = request.form['email']
-        user_group = request.form['group']
+        user_email = request.form['email']
+        user_role = request.form['role']
 
         conn = pymysql.connect(host=mysql_server, port=mysql_port, user=mysql_username, passwd=mysql_password,
                                db=mysql_db, charset='utf8')
         curs = conn.cursor()
         curs.execute(
-            "update users set email = '%(email)s', user_group = '%(user_group)s' where id = '%(id)s'" % {
-                'email': email, 'user_group': user_group, 'id': id})
+            "update users set user_email = '%(user_email)s', user_role = '%(user_role)s' where id = '%(id)s'" % {
+                'user_email': user_email, 'user_role': user_role, 'id': id})
         data = curs.fetchall()
 
         if len(data) is 0:
