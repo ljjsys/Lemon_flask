@@ -25,25 +25,11 @@ div.table_header>h3 {color: #939da8;padding:5px;}
 #generateCron {margin-top: 4px; margin-left:10px;}
 
 
-/* .editButton { background-color:transparent;border:0} */
-
-/* .users_header {
-    background-color: #2E363F;
-    margin-top: -40px;
-    height: 30px;
-    border-radius:3px;
-} */
-
-.users_box {
+.users_box, .roles_box {
     background-color:#fff;
     margin: 10px;
 }
 
-.users_content {
+.users_content, .roles_content {
     padding-top: 40px;
-}
-
-.groups_box {
-    background-color:#fff;
-    margin: 10px;
 }
