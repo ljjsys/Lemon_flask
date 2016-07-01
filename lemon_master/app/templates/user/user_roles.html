@@ -1,0 +1,18 @@
+<div class="roles_box">
+    <div class="roles_content">
+        <table id="role_list" class="table  table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th class="info">Role_Name</th>
+                </tr>
+            </thead>
+            <tbody id="role_tb">
+                {% for role in role_list %}
+                    <tr class="role_tr">
+                        <td class="center">{{ role[0] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
