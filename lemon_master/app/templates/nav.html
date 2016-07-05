@@ -6,7 +6,7 @@
             </div>
             <li id="Dashboard"><a href="{{ url_for('main.dashboard') }}"><i class="fa fa-tachometer"></i><span>Dashboard</span></a></li>
             <li id="user_manage"><a href="{{ url_for('user.user_manage') }}"><i class="fa fa-users"></i><span>User Manage</span></a></li>
-            <li><a href="#"><i class="fa fa-umbrella"></i><span>Data_Sync</span></a></li>
+            <li id="data_sync"><a href="{{ url_for('data_sync.data_sync_list') }}"><i class="fa fa-umbrella"></i><span>Data_Sync</span></a></li>
             <li><a href="#"><i class="fa fa-server"></i><span>Server List</span></a></li>
             <li><a href="#"><i class="fa fa-terminal"></i><span>Shell Terminal</span></a></li>
             <li><a href="#"><i class="fa fa-cog"></i><span>Ansible</span></a></li>
