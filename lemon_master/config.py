@@ -32,3 +32,11 @@ class Config(object):
     mysql_password = 'memory'
     mysql_port = 3306
     mysql_db = 'Lemon_GO'
+
+    # python 3 path
+    python3_path = '/opt/python-3.5.1/bin/python3'
+
+    # python 2 path
+    python2_path = '/usr/bin/python'
+
+
