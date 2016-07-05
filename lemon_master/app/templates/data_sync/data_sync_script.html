@@ -1,0 +1,93 @@
+<!-- jquery plugin datatables -->
+<script src="../static/js/jquery.dataTables.min.js"></script>
+<script src="../static/js/jquery.noty.packaged.min.js"></script>
+<script>
+    $(document).ready( function () {
+        $('#backup_list').DataTable();
+    });
+
+        $.validator.addMethod('IP4Checker', function(value) {
+            var ip = /^(25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[0-9]{2}|[0-9])(\.(25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[0-9]{2}|[0-9])){3}$/;
+            return value.match(ip);
+        }, 'Invalid IP address');
+
+        $("#backupdes").validate({
+            rules: {
+                addIP: {
+                    required: true,
+                    IP4Checker: true
+                }
+            }
+        });
+    function AddBackup() {
+        if (!$('#backupdes').valid()) {
+                        return;
+            }
+
+        $.ajax({
+            url: '/addBackup',    <!-- 定议函数名不要和url后缀一样 -->
+            type: 'POST',
+            data: {
+                jobname:$.trim($('#addJobname').val()),
+                <!-- hostname:$("input[name='inputHostname']").val(), 字段名不能用中横线-->
+                ipaddr:$('#addIP').val(),
+                sshport:$('#addPort').val(),
+                source:$('#addSource').val(),
+                destination:$('#addDestination').val(),
+                jobminute:$.trim($('#input-job-minute').val()),
+                jobhour:$.trim($('#input-job-hour').val()),
+                jobday:$.trim($('#input-job-day').val()),
+                jobmonth:$.trim($('#input-job-month').val()),
+                jobweek:$.trim($('#input-job-day-of-week').val()),
+                owner:$('#addOwner').val(),
+                backup_server:$('#addBackup_server').val(),
+            },
+            success: function(result){
+                <!-- $('#addModal').modal('hide'); -->
+                top.location.reload();
+            },
+            error: function(error){
+                    console.log(error);
+            }
+        });
+    }
+
+    function Delete(elem){
+        localStorage.setItem('deleteId',$(elem).attr('data-id'));
+        $('#deleteModal').modal();
+    }
+
+    function ConfirmDelete(){
+        $.ajax({
+            url : '/deleteBackup',
+            data : {id:localStorage.getItem('deleteId')},
+            type : 'POST',
+            success: function(msg){         <!-- alert(res)   the msg info: {'status':'OK'} -->
+                var result = JSON.parse(msg);
+                if(result.status == 'OK'){
+                    top.location.reload();
+                }
+                else{
+                    alert(result.status);
+                }
+            },
+            error: function(error){
+                console.log(error);
+            }
+        });
+    }
+
+    function generate_Cron(){
+        $('#generateModal').modal();
+        $.ajax({
+            url : '/generateCron',
+            type : 'GET',
+            success: function(msg){         <!-- alert(res)   the msg info: {'status':'OK'} -->
+                console.log(msg);
+            },
+            error: function(error){
+                console.log(error);
+            }
+        });
+    }
+</script>

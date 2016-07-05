@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block stylesheet %}
+    <link rel="stylesheet"  href="{{ url_for('static', filename='css/jquery.dataTables.min.css') }}">
+    <link rel="stylesheet"  href="{{ url_for('static', filename='css/jquery-ui.min.css') }}">
+{% endblock%}
+
+{% block content %}
+    {% include 'data_sync/data_sync_content.html' %}
+    {% include 'data_sync/data_sync_modal.html' %}
+{% endblock %}
+
+{% block script %}
+    {% include 'data_sync/data_sync_script.html' %}
+{% endblock %}

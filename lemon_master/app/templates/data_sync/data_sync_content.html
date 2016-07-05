@@ -1,0 +1,54 @@
+<div class="table_box">
+
+    <div class="table_header bg-lightblack">
+        <button id="newBackup" class="btn btn-info btn-xs" data-toggle="modal" data-target="#addModal">newBackup</button>
+        <button id="generateCron" class="btn btn-info btn-xs" onclick="generate_Cron(this)">generate_Cron</button>
+        <span><strong >请注意：任何修改要生效，请点击“generate_Cron”。</strong></span>
+        <button id="addBackupServer" class="btn btn-info btn-xs pull-right" onclick="generate_Cron(this)">addBackupServer</button>
+    </div>
+    <div class="table_content">
+        <table id="backup_list" class="table  table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th class="info">BackupName</th>
+                    <th>IP</th>
+                    <th>ssh_port</th>
+                    <th class="info">Source</th>
+                    <th>Destination</th>
+                    <th class="danger">Schedule</th>
+                    <th>Owner</th>
+                    <th>BackupState</th>
+                    <th>Last_RunTime</th>
+                    <th class="info">Actions</th>
+                    <th class="info">Backup_server</th>
+                </tr>
+            </thead>
+            <tbody id="backup_tb">
+                {% for backup in backup_list %}
+                     <tr class="server_tr">
+                        <td class="center">{{ backup[1] }}</td>
+                        <td class="center">{{ backup[2]}}</td>
+                        <td class="center">{{ backup[9]}}</td>
+                        <td class="center">{{ backup[3]}}</td>
+                        <td class="center">{{ backup[4]}}</td>
+                        <td class="center warning">{{ backup[5]}}</td>
+                        <td class="center">{{ backup[6]}}</td>
+                        {% if  backup[7] == 'Failed' %}
+                          <td class="center danger">{{ backup[7]}}</td>
+                        {% else %}
+                           <td class="center">{{ backup[7]}}</td>
+                        {% endif %}
+                        <td class="center">{{ backup[8]}}</td>
+                        <td class="center">
+                            <button data-id={{ backup[0] }} data-hostname=${Hostname} type="button" class="btn btn-danger btn-xs" onclick="Delete(this)">
+                                <i class="fa fa-trash-o"></i>
+                            </button>
+                        </td>
+                         <td class="center">{{ backup[10]}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
