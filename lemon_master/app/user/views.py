@@ -14,7 +14,7 @@ mysql_password = Config.mysql_password
 mysql_port = 3306
 mysql_db = Config.mysql_db
 
-
+# user view
 @user.route('/user_manage')
 @login_required
 def user_manage():
