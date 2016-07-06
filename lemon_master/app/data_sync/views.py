@@ -25,11 +25,13 @@ def data_sync_list():
         'backup_state,last_runtime,ssh_port,backup_server from backup')
     backup_list = curs.fetchall()
 
-    backup_server_list = []
-    for backup_server in backup_list:
-        backup_server_list.append(backup_server[10])
-
-    backup_server_list = set(backup_server_list)
+    curs.execute('select backup_server_name from backup_server')
+    backup_server_list = curs.fetchall()
+    # backup_server_list = []
+    # for backup_server in backup_list:
+    #     backup_server_list.append(backup_server[10])
+    #
+    # backup_server_list = set(backup_server_list)
     print(backup_server_list)
 
     return render_template('data_sync/Data_sync.html', backup_list=backup_list, backup_server_list=backup_server_list,
