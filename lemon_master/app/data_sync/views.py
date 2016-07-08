@@ -1,10 +1,11 @@
 from . import data_sync
-from flask import render_template, request, session
+from flask import render_template, request, session, redirect
 from flask.ext.login import login_required
 import pymysql
 from config import Config
 import datetime
 from flask import json
+import subprocess
 
 # mysql db
 mysql_server = Config.mysql_server
@@ -25,18 +26,12 @@ def data_sync_list():
         'backup_state,last_runtime,ssh_port,backup_server from backup')
     backup_list = curs.fetchall()
 
-    curs.execute('select backup_server_name from backup_server')
+    curs.execute('select server_name from backup_server')
     backup_server_list = curs.fetchall()
-    # backup_server_list = []
-    # for backup_server in backup_list:
-    #     backup_server_list.append(backup_server[10])
-    #
-    # backup_server_list = set(backup_server_list)
     print(backup_server_list)
 
     return render_template('data_sync/Data_sync.html', backup_list=backup_list, backup_server_list=backup_server_list,
                            user_name=session.get('username'))
-
 
 @data_sync.route('/addBackup', methods=['POST'])
 def addBackup():
@@ -75,11 +70,9 @@ def addBackup():
             return render_template('Errors/error.html', error='An error occurred!')
     except Exception as e:
         return render_template('Errors/error.html', error=str(e))
-
     finally:
         curs.close()
         conn.close()
-
 
 @data_sync.route('/deleteBackup', methods=['POST'])
 def deleteBackup():
@@ -109,3 +102,39 @@ def generateCron():
     subprocess.check_output(
         '/opt/python-3.5.1/bin/python3 /root/Projects/data_sync/data_sync_master/backup/backup_master.py', shell=True)
     return "haha"
+
+@data_sync.route('/add_BackupServer', methods=['POST'])
+def addBackupServer():
+    try:
+        server_name = request.form['server_name']
+        ipaddress = request.form['ipaddress']
+        backup_folder = request.form['backup_folder']
+        backup_user = request.form['backup_user']
+
+        conn = pymysql.connect(host=mysql_server, port=mysql_port, user=mysql_username, passwd=mysql_password,
+                               db=mysql_db, charset='utf8')
+        curs = conn.cursor()
+
+        curs.execute('''insert into backup_server (server_name, ipaddress, backup_folder, backup_user)
+                    VALUES( '%(server_name)s', '%(ipaddress)s', '%(backup_folder)s', '%(backup_user)s')'''
+                     %{'server_name': server_name, 'ipaddress': ipaddress, 'backup_folder': backup_folder, 'backup_user': backup_user})
+        data = curs.fetchall()
+
+        if len(data) is 0:
+            conn.commit()
+        else:
+            return render_template('Errors/error.html', error='An error occurred! Please check log.')
+        user_create = subprocess.check_call("salt '%(server_name)s' cmd.run 'groupadd -g 6000 backup && useradd -u 6000 -g 6000 backup'" % {'server_name': server_name},
+                                shell=True)
+        print(user_create)
+
+        ssh_key_create = subprocess.check_call("salt '%(server_name)s' lemon_module.create_ssh_user_key backup" % {'server_name': server_name},
+                                shell=True)
+        print(ssh_key_create)
+        return "status: Ok."
+
+    except Exception as e:
+        return render_template('Errors/error.html', error=str(e))
+    finally:
+        curs.close()
+        conn.close()
