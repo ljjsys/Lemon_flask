@@ -50,8 +50,14 @@ body {
   background-color: #939da8;
 }
 
+/* error style*/
 .error {
   color: #ac2925;
+}
+
+/* input disabled */
+.form-control[disabled] {
+  background-color:#cccccc;
 }
 
 .row-box {
