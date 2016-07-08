@@ -33,9 +33,19 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-sm-2 control-label">backup_Server</label>
+                    <div class="col-sm-10">
+                        <select id="Backup_server" class="form-control">
+                            {% for backup_server in backup_server_list %}
+                                <option value="{{ backup_server[0] }}">{{ backup_server[0] }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="col-sm-2 control-label">Destination</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="addDestination" name="addDestination" required="required" placeholder="Destination path, eg. /opt/backup/">
+                      <input type="text" class="form-control" id="addDestination" name="addDestination" disabled="disabled" value="/opt/Backup/">
                     </div>
                 </div>
 
@@ -43,16 +53,6 @@
                     <label class="col-sm-2 control-label">Owner</label>
                     <div class="col-sm-10">
                       <input type="text" class="form-control" id="addOwner" name="addOwner" required="required" placeholder="Owner">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">backup_Server</label>
-                    <div class="col-sm-10">
-                        <select id="addBackup_server" class="form-control">
-                            {% for backup_server in backup_server_list %}
-                                <option value="{{ backup_server }}">{{ backup_server }}</option>
-                            {% endfor %}
-                        </select>
                     </div>
                 </div>
 
@@ -90,12 +90,10 @@
                 </div>
             </form>
           </div>
-
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<!-- server delete modal -->
 <div id="deleteModal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -113,7 +111,6 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<!-- server delete modal -->
 <div id="generateModal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -125,4 +122,57 @@
           </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div id="addBackupServer_Modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 id="addModalLabel" class="modal-title">Add Backup Server</h4>
+          </div>
+          <!-- you can place the contents in modal-body -->
+          <div class="modal-body">
+            <form class="form-horizontal" id="backup_server_des">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">server_name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="add_server_name" name="add_server_name" required="required" placeholder="eg.backup_server_01">
+                        <p>
+                            <strong style="color: #b81900">注意：请先确保目标服务器安装好salt-minion 代理客户端. 主机名引用需是salt Accepted Keys。如:<br /></strong>
+                            <code>
+                                [root@om-center ~]# salt-key<br />
+                                Accepted Keys:<br />
+                                om-center<br />
+                                test-client.mgtest.com<br />
+                            </code>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">ipaddress</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="add_ipaddress" name="add_ipaddress" required="required" placeholder="eg.10.1.1.1">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">backup_folder</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="add_backup_folder" name="add_backup_folder" disabled="disabled" value="/opt/Backup">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">backup_user</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="add_backup_user" name="add_backup_user" disabled="disabled" value="backup">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-info" data-dismiss="modal">Cancle</button>
+                  <button id="btnAdd" type="button" class="btn btn-primary" onclick="addBackupServer(this)" >Add</button>
+                </div>
+            </form>
+          </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+
 </div><!-- /.modal -->
