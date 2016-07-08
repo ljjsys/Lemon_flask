@@ -24,4 +24,5 @@ span strong { color:#FF0000;}
 #newServer {margin-top: 8px; margin-left:6px; }
 #newBackup {margin-top: 8px; margin-left:6px; }
 #generateCron {margin-top: 8px; margin-left:10px;}
+#addBackupServer {margin-top: 8px; margin-left:100px;}
 
