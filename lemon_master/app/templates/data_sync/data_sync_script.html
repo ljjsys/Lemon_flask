@@ -47,7 +47,7 @@
                 jobmonth:$.trim($('#input-job-month').val()),
                 jobweek:$.trim($('#input-job-day-of-week').val()),
                 owner:$('#addOwner').val(),
-                backup_server:$('#addBackup_server').val(),
+                backup_server:$('#Backup_server').val(),
             },
             success: function(result){
                 <!-- $('#addModal').modal('hide'); -->
@@ -85,12 +85,15 @@
     }
 
     function generate_Cron(){
-        $('#generateModal').modal();
         $.ajax({
             url : '/generateCron',
-            type : 'GET',
+            type : 'POST',
+            data: {
+                backup_server:$('#g_Backup_server').val(),
+            },
             success: function(msg){         <!-- alert(res)   the msg info: {'status':'OK'} -->
                 console.log(msg);
+                top.location.reload();
             },
             error: function(error){
                 console.log(error);
@@ -121,11 +124,11 @@
         });
     }
 
-//    var str = $('#addSource').val()
-//    $('#addDestination').val(str+'aa')
 
+//    automate generate destination folder
     $('#addSource').change(function () {
-        $('#addDestination').val('/opt/Backup'+$('#addSource').val());
+        var folder_path = $('#addSource').val().split('/');
+        $('#addDestination').val('/opt/Backup/'+$('#addJobname').val()+'_'+folder_path[folder_path.length-1]);
     })
 
 </script>
