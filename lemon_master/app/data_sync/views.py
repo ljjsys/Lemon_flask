@@ -60,11 +60,18 @@ def addBackup():
                      %{'backup_jobname': backup_jobname, 'backup_ipaddr': backup_ipaddr, 'ssh_port': ssh_port,
             'backup_source': backup_source, 'backup_destination': backup_destination, 'backup_shedule': backup_shedule,
             'backup_owner': backup_owner, 'created_time': created_time, 'backup_server':backup_server})
-        print('here here')
+
         data = curs.fetchall()
 
         if len(data) is 0:
             conn.commit()
+            user_create = subprocess.check_call(
+                "salt '%(backup_jobname)s' cmd.run 'groupadd -g 6000 backup && useradd -u 6000 -g 6000 backup'" % {
+                    'backup_jobname': backup_jobname},
+                shell=True)
+            print(user_create)
+            subprocess.check_call("salt 'test-client.mgtest.com' ssh.set_auth_key_from_file backup salt://ssh_keys/backup_id_rsa.pub" ,shell=True)
+
             return redirect('/data_sync')
         else:
             return render_template('Errors/error.html', error='An error occurred!')
@@ -96,12 +103,6 @@ def deleteBackup():
         print('final')
         curs.close()
         conn.close()
-
-@data_sync.route('/generateCron', methods=['GET'])
-def generateCron():
-    subprocess.check_output(
-        '/opt/python-3.5.1/bin/python3 /root/Projects/data_sync/data_sync_master/backup/backup_master.py', shell=True)
-    return "haha"
 
 @data_sync.route('/add_BackupServer', methods=['POST'])
 def addBackupServer():
@@ -138,3 +139,49 @@ def addBackupServer():
     finally:
         curs.close()
         conn.close()
+
+
+@data_sync.route('/generateCron', methods=['POST'])
+def generateCron():
+    backup_server = request.form['backup_server']
+    conn = pymysql.connect(host=mysql_server, port=mysql_port, user=mysql_username, passwd=mysql_password, db=mysql_db,
+                           charset='utf8')
+    curs = conn.cursor()
+    curs.execute(
+        "select backup_jobname,backup_ipaddr,ssh_port,backup_source,backup_destination,backup_shedule,backup_id,backup_server from backup "
+        "where backup_server='%(backup_server)s'" %{'backup_server': backup_server})
+    backup_list = curs.fetchall()
+
+    print(backup_list)
+    # with open('/srv/salt/crons/cron', 'w') as f:
+    #     pass
+    cron_list = []
+    for backup in backup_list:
+        backup_user = 'backup'
+        cron_shedule = backup[5]
+        backup_ip = backup[1]
+        ssh_port = backup[2]
+        backup_source = backup[3]
+        backup_destination = backup[4]
+        backup_id = backup[6]
+        cron_cmd = '''/opt/lemon_agent/data_sync/rsync.sh -p %(ssh_port)s -s %(backup_user)s@%(backup_ip)s:%(backup_source)s \
+-d %(backup_destination)s -i %(backup_id)s''' % {
+            'backup_user': backup_user, 'backup_ip': backup_ip, 'ssh_port': ssh_port, 'backup_source': backup_source,
+            'backup_destination': backup_destination, 'backup_id': backup_id }
+        print (cron_cmd)
+        cron_list.append(cron_shedule + ' ' + cron_cmd + '\n')
+    print(cron_list)
+    with open('/srv/salt/crons/%s_%s.cron' %(backup_server,backup_user ) ,'w') as f:
+        f.writelines(cron_list)
+    subprocess.check_call(
+            "salt '%(backup_server)s' cp.get_file salt://crons/%(backup_server)s_%(backup_user)s.cron /tmp/%(backup_server)s_%(backup_user)s.cron"
+            % {'backup_server': backup_server, 'backup_user':backup_user},shell=True)
+        # with open('/srv/salt/crons/cron', 'a') as f:
+        #     f.write(cron_shedule + ' ' + cron_cmd + '\n')
+    subprocess.check_call(
+        "salt '%(backup_server)s' cron.write_cron_file_verbose %(backup_user)s /tmp/%(backup_server)s_%(backup_user)s.cron"
+        % {'backup_server': backup_server, 'backup_user': backup_user}, shell=True)
+    # subprocess.check_output(
+    #     '/opt/python-3.5.1/bin/python3 /root/Projects/data_sync/data_sync_master/backup/backup_master.py', shell=True)
+    return 'haha'
+
