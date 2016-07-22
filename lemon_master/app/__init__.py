@@ -28,8 +28,11 @@ def create_app():
     from .user import user as user_blueprint
     app.register_blueprint(user_blueprint)
 
-    from .data_sync import data_sync as data_sync_bluprint
-    app.register_blueprint(data_sync_bluprint)
+    from .data_sync import data_sync as data_sync_bluerint
+    app.register_blueprint(data_sync_bluerint)
+
+    from .server import server as server_blueprint
+    app.register_blueprint(server_blueprint)
 
     #from .auth import auth as auth_blueprint
     #app.register_blueprint(auth_blueprint, url_prefix='/auth')
