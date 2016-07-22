@@ -9,9 +9,18 @@
           <div class="modal-body">
             <form class="form-horizontal" id="backupdes">
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">Name</label>
+                    <label class="col-sm-2 control-label">BackupName</label>
                     <div class="col-sm-10">
                       <input type="text" class="form-control" id="addJobname" required="required"  data-rule-required="true" placeholder="input your job name">
+                        <p>
+                            <strong style="color: #b81900">注意：请先确保目标服务器安装好salt-minion 代理客户端. BackupName 引用需是salt Accepted Keys。如:<br /></strong>
+                            <code>
+                                [root@om-center ~]# salt-key<br />
+                                Accepted Keys:<br />
+                                om-center<br />
+                                test-client.mgtest.com
+                            </code>
+                        </p>
                     </div>
                 </div>
                 <div class="form-group">
@@ -111,19 +120,6 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div id="generateModal" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-body">
-            <p style="color:red">the cron has been generated, you can have a check by "crontab -l" on target server!!!</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Ok</button>
-          </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
 <div id="addBackupServer_Modal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -138,12 +134,12 @@
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="add_server_name" name="add_server_name" required="required" placeholder="eg.backup_server_01">
                         <p>
-                            <strong style="color: #b81900">注意：请先确保目标服务器安装好salt-minion 代理客户端. 主机名引用需是salt Accepted Keys。如:<br /></strong>
+                            <strong style="color: #b81900">注意：请先确保目标服务器安装好salt-minion 代理客户端. server_name 引用需是salt Accepted Keys。如:<br /></strong>
                             <code>
                                 [root@om-center ~]# salt-key<br />
                                 Accepted Keys:<br />
                                 om-center<br />
-                                test-client.mgtest.com<br />
+                                test-client.mgtest.com
                             </code>
                         </p>
                     </div>
@@ -176,3 +172,34 @@
     </div><!-- /.modal-dialog -->
 
 </div><!-- /.modal -->
+
+<div id="generateModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 id="addModalLabel" class="modal-title">Generate Cron</h4>
+          </div>
+          <!-- you can place the contents in modal-body -->
+          <div class="modal-body">
+              <p style="color:red">You can have a check by "crontab -l" on target server!!!</p>
+            <form class="form-horizontal" id="backup_server_des">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">backup_Server</label>
+                    <div class="col-sm-10">
+                        <select id="g_Backup_server" class="form-control">
+                            {% for backup_server in backup_server_list %}
+                                <option value="{{ backup_server[0] }}">{{ backup_server[0] }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-info" data-dismiss="modal">Cancle</button>
+                  <button id="btnGenerate" type="button" class="btn btn-primary" onclick="generate_Cron(this)" >Generate</button>
+                </div>
+            </form>
+          </div>
+        </div>
+    </div>
+
+</div>
