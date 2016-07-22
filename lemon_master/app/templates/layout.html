@@ -11,6 +11,8 @@
         <link rel="stylesheet"  href="{{ url_for('static', filename='css/layout.css') }}">
         <link rel="stylesheet"  href="{{ url_for('static', filename='css/@media.css') }}">
         <link rel="stylesheet"  href="{{ url_for('static', filename='css/lemon.css') }}">
+        <link rel="stylesheet"  href="{{ url_for('static', filename='css/jquery.dataTables.min.css') }}">
+        <link rel="stylesheet"  href="{{ url_for('static', filename='css/jquery-ui.min-darkHive.css') }}">
         {% block stylesheet %}
         {% endblock %}
     </head>
@@ -29,8 +31,12 @@
 
         <!-- JS  -->
         <script src="../static/js/jquery-2.1.4.min.js"></script>
+        <script src="../static/js/jquery-ui.min-darkHive.js"></script>
         <script src="../static/js/bootstrap.min.js"></script>
         <script src="../static/js/jquery.validate.min.js"></script>  <!-- 使用validator时，需要有name元素 -->
+        <script src="../static/js/jquery.noty.packaged.min.js"></script>
+        <script src="../static/js/jquery.tmpl.js"></script>
+        <script src="../static/js/jquery.dataTables.min.js"></script>
         <script>
             <!-- active menu -->
 		    var url_array = location.pathname.split("/");

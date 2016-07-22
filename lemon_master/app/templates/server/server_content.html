@@ -1,0 +1,47 @@
+<div class="table_box">
+    <div class="table_header bg-lightblack">
+        <button id="newServer" class="btn btn-info btn-xs" data-toggle="modal" data-target="#addModal"><i class="fa fa-plus"></i></button>
+    </div>
+
+    <div class="table_content">
+        <table id="server_list" class="table  table-bordered table-hover">
+            <thead>
+                <tr>
+                  <th class="info">Hostname</th>
+                  <th class="info">IP</th>
+                  <th class="info">OS</th>
+                  <th>CPU</th>
+                  <th>Memory</th>
+                  <th class="info">Model</th>
+                  <th>Application</th>
+                  <th>Owner</th>
+                  <th>Created_time</th>
+                  <th class="info">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="server_tb">
+                {% for server in server_list %}
+                     <tr class="server_tr">
+                        <td class="center">{{ server[1]}}</td>
+                        <td class="center">{{ server[2] }}</td>
+                        <td class="center">{{ server[3] }}</td>
+                        <td class="center">{{ server[4] }}</td>
+                        <td class="center">{{ server[5] }}</td>
+                        <td class="center">{{ server[6] }}</td>
+                        <td class="center">{{ server[7] }}</td>
+                        <td class="center">{{ server[8] }}</td>
+                        <td class="center">{{ server[9] }}</td>
+                        <td class="center">
+                            <button data-id={{ server[0] }} type="button" class="btn btn-info btn-xs editButton" onclick="Edit(this)">
+                                <i class="fa fa-pencil-square-o"></i>
+                            </button>
+                            <button data-id={{ server[0] }} data-hostname=${Hostname} type="button" class="btn btn-danger btn-xs" onclick="Delete(this)">
+                                <i class="fa fa-trash-o"></i>
+                            </button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,214 @@
+<!-- server edit modal-->
+<div id="editModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 id="editModalLabel" class="modal-title">Edit server_info</h4>
+          </div>
+          <!-- you can place the contents in modal-body -->
+          <div class="modal-body">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Hostname</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="editHostname" placeholder="Hostname" >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">IP</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="editIP" placeholder="ip address"  disabled="disabled">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">OS</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="editOS" placeholder="OS type"  disabled="disabled">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">CPU</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="editCPU"  disabled="disabled">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Memory</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="editMemory" placeholder="Pysical memory size"  disabled="disabled">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Model</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="editModel" placeholder="Server Model"  disabled="disabled">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Application</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="editApp" placeholder="Applications on server">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Owner</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="editOwner" placeholder="who is maintainner?">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Location</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="editLocation" placeholder="where is the server?">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">SN</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="editSN" placeholder="server Serial number">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Warranty</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="editWarranty" placeholder="Server Warranty">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Created_time</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="editCT" placeholder="Created recoder time"  disabled="disabled" >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Updated_time</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="editUT" placeholder="Updated recoder time"  disabled="disabled">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Remarks</label>
+                    <div class="col-sm-10">
+                      <textarea class="form-control" id="editRemarks" placeholder="Server remark info"></textarea>
+                    </div>
+                </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+            <button id="btnUpdate" type="button" class="btn btn-primary">Update</button>
+          </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<!-- server delete modal -->
+<div id="deleteModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Delete server</h4>
+          </div>
+          <div class="modal-body">
+            <p style="color:red">Are you sure to delete this server record ? !!!</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" onclick="ConfirmDelete(this)">Yes</button>
+            <button type="button" class="btn btn-success" data-dismiss="modal">No</button>
+          </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<!-- server add modal-->
+<div id="addModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 id="addModalLabel" class="modal-title">Add New Server</h4>
+              </div>
+              <!-- you can place the contents in modal-body -->
+              <div class="modal-body">
+                <form class="form-horizontal"  action="{{ url_for('server.addServer') }}" method="post">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Hostname</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" name="addHostname" required="required" placeholder="Hostname">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">IP</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" name="addIP" placeholder="ip address">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">OS</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" name="addOS" required="required" placeholder="OS type">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">CPU</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" name="addCPU" placeholder="CPU core number">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Memory</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" name="addMemory" placeholder="Pysical memory size">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Model</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" name="addModel" placeholder="Server Model">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Application</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" name="addApp" placeholder="Applications on server">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Owner</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" name="addOwner" required="required" placeholder="who is maintainner?">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Location</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" name="addLocation" required="required" placeholder="where is the server?">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">SN</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" name="addSN" placeholder="server Serial number">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Warranty</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" name="addWarranty" id="addWarranty" placeholder="Server Warranty">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Remarks</label>
+                        <div class="col-sm-10">
+                          <textarea class="form-control" name="addRemarks" required="required" placeholder="Server remark info"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-info" data-dismiss="modal">Cancle</button>
+                      <button type="submit" class="btn btn-primary">Add</button>
+                    </div>
+                </form>
+              </div>
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>

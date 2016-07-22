@@ -1,0 +1,83 @@
+<script>
+    $(document).ready( function () {
+        $('#server_list').DataTable();
+        $('#addWarranty').datepicker({ dateFormat: 'yy-mm-dd' }).val();
+        $('#editWarranty').datepicker({ dateFormat: 'yy-mm-dd' }).val();
+    });
+    function Delete(elem){
+        localStorage.setItem('deleteId',$(elem).attr('data-id'));
+        $('#deleteModal').modal();
+    }
+    function ConfirmDelete(){
+        $.ajax({
+            url : '/deleteServer',
+            data : {id:localStorage.getItem('deleteId')},
+            type : 'POST',
+            success: function(res){
+                var result = JSON.parse(res);
+                if(result.status == 'OK'){
+                    $('#deleteModal').modal('hide');
+                    top.location.reload();
+                }
+                else{
+                    alert(result.status);
+                }
+            },
+            error: function(error){
+                console.log(error);
+            }
+        });
+    }
+    function Edit(elem){
+        localStorage.setItem('editId',$(elem).attr('data-id'));
+        $.ajax({
+            url : '/get_server_byid',
+            data : {id:$(elem).attr('data-id')},
+            type : 'POST',
+            success: function(res){
+                var data = JSON.parse(res);
+                $('#editHostname').val(data[0]['Hostname']);
+                $('#editIP').val(data[0]['IP']);
+                $('#editOS').val(data[0]['OS']);
+                $('#editCPU').val(data[0]['CPU']);
+                $('#editMemory').val(data[0]['Memory']);
+                $('#editModel').val(data[0]['Model']);
+                $('#editApp').val(data[0]['App']);
+                $('#eidtOwner').val(data[0]['Owner']);
+                $('#editLocation').val(data[0]['Location']);
+                $('#editSN').val(data[0]['SN']);
+                $('#editWarranty').val(data[0]['Warranty']);
+                $('#editCT').val(data[0]['Created_time']);
+                $('#editUT').val(data[0]['Updated_time']);
+                $('#editRemarks').val(data[0]['Remarks']);
+                $('#editModal').modal();
+            },
+            error: function(error){
+                console.log(error);
+            }
+        });
+    }
+
+    $('#btnUpdate').click(function(){
+        $.ajax({
+            url : '/updateServer',
+            data : {
+                id:localStorage.getItem('editId'),
+                app:$('#editApp').val(),
+                owner:$('#editOwner').val(),
+                location:$('#editLocation').val(),
+                sn:$('#editSN').val(),
+                warranty:$('#editWarranty').val(),
+                remarks:$('#editRemarks').val(),
+            },
+            type : 'POST',
+            success: function(res){
+            $('#editModal').modal('hide');
+            top.location.reload();
+            },
+            error: function(error){
+                console.log(error);
+            }
+        });
+    });
+</script>
