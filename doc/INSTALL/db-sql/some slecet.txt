@@ -3,3 +3,18 @@ SELECT * FROM users,roles WHERE users.`role_id` = roles.`id`
 INSERT INTO `Lemon_GO`.`users` SET role_id = (SELECT id FROM roles WHERE role_name='administrator')
 
 INSERT INTO `Lemon_GO`.`users` (`user_name`, `user_email`, role_id ) VALUES ('lala', 'lala@lemon.com', (SELECT id FROM roles WHERE role_name='administrator'));
+
+SELECT users.id,user_name,user_email,created_time,role_name FROM users INNER JOIN roles ON users.`role_id` = roles.`id` WHERE users.`id`='12'
+
+SELECT * FROM users INNER JOIN roles ON users.`role_id` = roles.`id`
+
+SELECT id FROM roles WHERE role_name='administrator'
+
+INSERT INTO `Lemon_GO`.`users` SET role_id = (SELECT id FROM roles WHERE role_name='administrator')
+
+INSERT INTO `Lemon_GO`.`users` (`user_name`, `user_email`, role_id ) VALUES ('lala', 'lala@lemon.com', (SELECT id FROM roles WHERE role_name='administrator'));
+
+SELECT backup_jobname,backup_ipaddr,ssh_port,backup_source,backup_destination,backup_shedule,backup_id,backup_server FROM BACKUP WHERE backup_server='om-center'
+
+UPDATE BACKUP SET backup_state = 'Failed' WHERE backup_id = 96
+INSERT INTO SERVER (`server_hostname`, `server_os`, `server_cpu`, `created_time`) VALUES ('om-center', 'CentOS-6.7-x86_64','Intel(R) Xeon(R) CPU E5-2609 0 @ 2.40GHz', '2016/07/21 16:00:55') ON DUPLICATE KEY UPDATE server_hostname='om-center'
