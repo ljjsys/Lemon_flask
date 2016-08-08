@@ -8,13 +8,29 @@
             <li id="user_manage"><a href="{{ url_for('user.user_manage') }}"><i class="fa fa-users"></i><span>User Manage</span></a></li>
             <li id="data_sync"><a href="{{ url_for('data_sync.data_sync_list') }}"><i class="fa fa-umbrella"></i><span>Data_Sync</span></a></li>
             <li id="server"><a href="{{ url_for('server.server_list') }}"><i class="fa fa-server"></i><span>Server List</span></a></li>
-            <li><a href="#"><i class="fa fa-terminal"></i><span>Shell Terminal</span></a></li>
-            <li><a href="#"><i class="fa fa-cog"></i><span>Ansible</span></a></li>
+            <li id="schedule"><a href="#"><i class="fa fa-tasks" aria-hidden="true"></i><span>schedule</span></a></li>
+            <!--<li><a href="#"><i class="fa fa-terminal"></i><span>Shell Terminal</span></a></li>-->
+            <li><a href="#"><i class="fa fa-eye" aria-hidden="true"></i><span>Monitor</span></a></li>
 {#            <li><a href="#"><i class="fa fa-ship"></i><span>Jboss Instance</span></a></li>#}
 {#            <li><a href="#"><i class="fa fa-codepen"></i><span>Docker</span></a></li>#}
 {#            <li><a href="#"><i class="fa fa-empire"></i><span>Security Update</span></a></li>#}
 {#            <li><a href="#"><i class="fa fa-check-circle"></i><span>Tasks</span></a></li>#}
-            <li><a href="#"><i class="fa fa-rebel"></i><span>Work Order</span></a></li>
+            <li id="work_order">
+                <a  href="#work_order_collapse" aria-controls="work_order_collapse" data-toggle="collapse">
+                    <i class="fa fa-rebel"></i><span>Work Order<i class="fa fa-fw fa-caret-down"></i></span>
+                </a>
+                <ul id="work_order_collapse" class="collapse nav nav-second-level" aria-expanded="true">
+                    <li>
+                        <a href="{{ url_for('work_order.work_order_statistic') }}">工单统计</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('work_order.work_order_list') }}">工单列表</a>
+                    </li>
+                    <li>
+                        <a href="#">我的工单</a>
+                    </li>
+                </ul>
+            </li>
 {#            <li><a href="#"><i class="fa fa-joomla" aria-hidden="true"></i><span>DNS</span></a></li>#}
             <li><a href="#"><i class="fa fa-life-ring" aria-hidden="true"></i><span>Audit</span></a></li>
         </ul>
