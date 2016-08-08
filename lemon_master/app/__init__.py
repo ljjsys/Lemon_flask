@@ -34,6 +34,9 @@ def create_app():
     from .server import server as server_blueprint
     app.register_blueprint(server_blueprint)
 
+    from .work_order import work_order as work_order_blueprint
+    app.register_blueprint(work_order_blueprint)
+
     #from .auth import auth as auth_blueprint
     #app.register_blueprint(auth_blueprint, url_prefix='/auth')
 
