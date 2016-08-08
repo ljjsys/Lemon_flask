@@ -8,6 +8,7 @@ body {
   /*overflow-x: hidden;*/
 }
 
+
 /* BACKGROUNDS */
 .bg-gray {
   background-color: #f3f3f4;
@@ -63,13 +64,19 @@ body {
 .row-box {
   background-color: #d1dade;
   margin: 0px;
-  height: 170px;
+  height: 150px;
 }
 
 .row .col-sm-3 {
-  margin-top: 10px;
-  margin-bottom: 2px;
+  margin-top: 5px;
+  /*margin-bottom: 2px;*/
 }
+
+/*.row .col-sm-2 {*/
+  /*margin-top: 10px;*/
+  /*margin-bottom: 2px;*/
+  /*background-color: #d1dade;*/
+/*}*/
 
 .span-login-user{
 	padding-left: 20px;
@@ -326,7 +333,7 @@ body.mini-navbar .navbar-static-side {
   overflow-x: hidden;
 }
 .wrapper {
-  padding: 0 20px;
+  padding: 0 10px;
 }
 .wrapper-content {
   padding: 20px 10px 40px;
@@ -466,7 +473,7 @@ img.circle-border {
 
 .ibox {
   clear: both;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   margin-top: 0;
   padding: 0;
 }
@@ -545,8 +552,3 @@ img.circle-border {
   left: auto;
   right: 0;
 }
-
-
-
-
-
