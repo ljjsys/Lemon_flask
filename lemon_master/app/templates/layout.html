@@ -37,7 +37,12 @@
         <script src="../static/js/jquery.noty.packaged.min.js"></script>
         <script src="../static/js/jquery.tmpl.js"></script>
         <script src="../static/js/jquery.dataTables.min.js"></script>
+        <script src="../static/js/highcharts.js"></script>
+
         <script>
+            $(document).ready( function () {
+                $(this).find("li.active").has("ul").children("ul").addClass("collapse in");
+            });
             <!-- active menu -->
 		    var url_array = location.pathname.split("/");
 		    s1 = url_array[1];
