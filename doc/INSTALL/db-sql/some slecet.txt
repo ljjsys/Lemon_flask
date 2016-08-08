@@ -18,3 +18,9 @@ SELECT backup_jobname,backup_ipaddr,ssh_port,backup_source,backup_destination,ba
 
 UPDATE BACKUP SET backup_state = 'Failed' WHERE backup_id = 96
 INSERT INTO SERVER (`server_hostname`, `server_os`, `server_cpu`, `created_time`) VALUES ('om-center', 'CentOS-6.7-x86_64','Intel(R) Xeon(R) CPU E5-2609 0 @ 2.40GHz', '2016/07/21 16:00:55') ON DUPLICATE KEY UPDATE server_hostname='om-center'
+
+SELECT wo_department,COUNT(*) FROM `work_orders` GROUP BY wo_department
+
+SELECT wo_department,wo_type,COUNT(*) FROM work_orders GROUP BY wo_department,wo_type
+
+SELECT wo_type,COUNT(*) FROM work_orders WHERE wo_group='IT' AND wo_department='IBS' AND wo_type='技术支持' GROUP BY wo_department,wo_type;
