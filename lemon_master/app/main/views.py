@@ -17,7 +17,7 @@ def login_page():
         if user is not None and user.verify_password(_password):
             login_user(user)
             session['username'] = user.user_name
-            print(user.id, user.user_name, user.password_hash)
+            session['role_id'] = user.role_id
             print(session)
             # return redirect('/Dashboard')
             return redirect(request.args.get('next') or '/Dashboard')
