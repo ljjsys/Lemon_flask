@@ -38,6 +38,7 @@
         <script src="../static/js/jquery.tmpl.js"></script>
         <script src="../static/js/jquery.dataTables.min.js"></script>
         <script src="../static/js/highcharts.js"></script>
+        <script src="../static/js/lemon-graph.js"></script>    <!-- lemon customized-->
 
         <script>
             $(document).ready( function () {
@@ -50,9 +51,6 @@
             $("#"+s1).addClass('active');
             $('#'+s1+' .'+s2).addClass('active');
             console.log(s1)
-{#            '/foo/bar/'.split('/') // ["", "foo", "bar", ""]#}
-{#            'foo/bar/'.split('/')  // ["foo", "bar", ""]#}
-{#            'foo/bar'.split('/')  // ["foo", "bar"]#}
 		</script>
         {% block script %}
         {% endblock %}
